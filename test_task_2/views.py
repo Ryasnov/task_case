@@ -6,6 +6,12 @@ from .models import PlayerLevel, LevelPrize
 
 
 def writing_to_csv(request):
+    """
+    View функция записывающая данные об уровне и игроке в csv-файл.
+    Файл заменяется ежеминутно, чтобы избежать слишком большого количества записей в файле.
+    Иначе попытка обработка такого файла может перегрузить ОП
+    """
+
     time = datetime.now().strftime("%Y-%m-%dT%H:%M")
     response = HttpResponse(
         content_type="text/csv",

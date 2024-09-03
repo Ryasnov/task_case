@@ -23,7 +23,9 @@ class PlayerLevel(models.Model):
     is_completed = models.BooleanField(default=False)
     score = models.PositiveIntegerField(default=0)
 
-    def get_prize(self):
+    def get_prize(self) -> None:
+        """Проверяет не получен ли приз за прохождение уровня ранее и отмечает время его получения"""
+
         prize = LevelPrize.objects.filter(level=self.level, received__isnull=True)
         if self.is_completed and prize.exists():
             prizes = LevelPrize.objects.filter(level=self.level)
