@@ -16,7 +16,7 @@ def writing_to_csv(request: Request) -> HttpResponse:
     time = datetime.now().strftime("%Y-%m-%dT%H:%M")
     response = HttpResponse(
         content_type="text/csv",
-        headers={"Content-Disposition": f"attachment; filename='level_data{time}.csv''"},
+        headers={"Content-Disposition": f"attachment; filename='level_data{time}.csv'"},
     )
     writer = csv.writer(response)
     writer.writerow(["Player ID", "Level Name", "Level Status", "Level Prize"])
