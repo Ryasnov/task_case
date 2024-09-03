@@ -4,10 +4,9 @@ from django.db import models
 from django.utils.timezone import now
 
 
-# TODO: написать документацию
-
-
 class Player(models.Model):
+    """Модель класса Player."""
+
     name = models.CharField(max_length=60, null=False, unique=True, verbose_name="Player name")
     first_entry_time = models.DateTimeField(blank=True, null=True, verbose_name="Time of first entry")
     previous_entry_time = models.DateTimeField(blank=True, null=True, verbose_name="Time of previous entry")
@@ -15,7 +14,9 @@ class Player(models.Model):
     score = models.PositiveIntegerField(default=0, verbose_name="Player points")
     level = models.PositiveIntegerField(default=1, verbose_name="Player level")
 
-    def entry(self, *args, **kwargs):
+    def entry(self, *args, **kwargs) -> None:
+        """Определяет время входа, и начисляет очки только если пользователь заходит каждый день."""
+
         time_now = now()
         if self.first_entry_time:
             today = time_now.date()
@@ -30,7 +31,9 @@ class Player(models.Model):
         self.previous_entry_time = time_now
         super(Player, self).save(*args, **kwargs)
 
-    def add_boost(self, boost_name):
+    def add_boost(self, boost_name: str):
+        """Создаёт объект класса Boost и присваивает его игроку"""
+
         boost = Boost.objects.create(name=boost_name, player=self.name)
         return boost
 
@@ -43,6 +46,8 @@ class Player(models.Model):
 
 
 class Boost(models.Model):
+    """Модель класса Boost"""
+
     name = models.CharField(max_length=60, verbose_name="Boost name")
     player = models.ForeignKey(Player, on_delete=models.CASCADE, verbose_name="Player")
 
