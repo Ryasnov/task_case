@@ -2,6 +2,8 @@ import datetime
 
 from django.db import models
 from django.utils.timezone import now
+
+
 # TODO: написать документацию
 
 
@@ -9,7 +11,7 @@ class Player(models.Model):
     name = models.CharField(max_length=60, null=False, unique=True, verbose_name="Player name")
     first_entry_time = models.DateTimeField(blank=True, null=True, verbose_name="Time of first entry")
     previous_entry_time = models.DateTimeField(blank=True, null=True, verbose_name="Time of previous entry")
-    entry_time = models.DateTimeField(blank=True, null=True, verbose_name="Actual entry time")
+    actual_entry_time = models.DateTimeField(blank=True, null=True, verbose_name="Actual entry time")
     score = models.PositiveIntegerField(default=0, verbose_name="Player points")
     level = models.PositiveIntegerField(default=1, verbose_name="Player level")
 
@@ -24,7 +26,7 @@ class Player(models.Model):
                     self.score += 1
         else:
             self.first_entry_time = time_now
-        self.entry_time = time_now
+        self.actual_entry_time = time_now
         self.previous_entry_time = time_now
         super(Player, self).save(*args, **kwargs)
 
