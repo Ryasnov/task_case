@@ -2,10 +2,11 @@ import csv
 from datetime import datetime
 
 from django.http import HttpResponse
+from rest_framework.request import Request
 from .models import PlayerLevel, LevelPrize
 
 
-def writing_to_csv(request):
+def writing_to_csv(request: Request) -> HttpResponse:
     """
     View функция записывающая данные об уровне и игроке в csv-файл.
     Файл заменяется ежеминутно, чтобы избежать слишком большого количества записей в файле.
